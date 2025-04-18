@@ -1,7 +1,12 @@
 import { Message } from '../../model/types';
-type ChatMessageProps = Message;
+import { Socket } from 'socket.io-client';
+type ChatMessageProps = {
+    message: Message;
+    currentUserId: string | number;
+    socket: React.RefObject<Socket>;
+};
 /**
  * Шаблон сообщения чата
  */
-export declare const ChatMessage: ({ senderId, content, createdAt, readed, isLoading, fileUrl, ...m }: ChatMessageProps) => import("react/jsx-runtime").JSX.Element;
+export declare const ChatMessage: ({ message, currentUserId, socket, }: ChatMessageProps) => import("react/jsx-runtime").JSX.Element;
 export {};

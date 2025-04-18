@@ -7,7 +7,7 @@ type ChatEvents = {
     /**
      * Прочитали сообщение
      */
-    onReadReceipt?: (msg: any) => void;
+    onMessageRead?: (msg: any) => void;
     /**
      * Произошла ошибка
      */

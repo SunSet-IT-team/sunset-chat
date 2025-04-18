@@ -6,6 +6,6 @@ import { useStyles } from './styles';
  */
 const ChatHeader = ({ chatUser }) => {
     const styles = useStyles();
-    return (_jsx(Box, { sx: styles.chatHeader, children: _jsxs(Stack, { sx: styles.chatHeaderUser, children: [_jsx(Avatar, { src: "", alt: "", sx: styles.chatHeaderUserImage }), _jsx(Typography, { sx: styles.chatHeaderUserName, children: chatUser.name })] }) }));
+    return (_jsx(Box, { sx: styles.chatHeader, children: _jsxs(Stack, { sx: styles.chatHeaderUser, children: [_jsx(Avatar, { src: chatUser.imagePath, alt: chatUser.name, sx: styles.chatHeaderUserImage }), _jsx(Typography, { sx: styles.chatHeaderUserName, children: chatUser.name })] }) }));
 };
 export default ChatHeader;

@@ -26,4 +26,8 @@ export const chatApi = {
         const res = api.get(`/chat/${chatId}/messages?page=${page}&limit=${limit}`);
         return res;
     },
+    getFile: (filename) => {
+        const res = api.get(`/api/files/${filename}`);
+        return res;
+    },
 };

@@ -9,6 +9,7 @@ export const useStyles = () => {
             mr: 'auto',
             ml: '',
             display: 'flex',
+            textAlign: 'left',
             flexDirection: 'column',
             alignItems: 'flex-end',
             backgroundColor: theme.palette.secondary.main,
@@ -27,9 +28,15 @@ export const useStyles = () => {
             color: 'white',
         },
         messageContent: {
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            width: '100%',
+        },
+        messageText: {
+            width: '100%',
             fontSize: '14px',
             wordBreak: 'break-all',
-            mb: 2,
         },
         messageTime: {
             fontSize: '10px',

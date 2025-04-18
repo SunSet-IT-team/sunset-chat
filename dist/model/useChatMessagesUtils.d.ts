@@ -4,4 +4,8 @@ import { MessageDTO } from '../api/dto';
  */
 export declare const useChatMessagesUtils: () => {
     addNewMessage: (message: MessageDTO) => void;
+    readMessage: (message: {
+        messageId: string | number;
+        chatId: string | number;
+    }) => void;
 };

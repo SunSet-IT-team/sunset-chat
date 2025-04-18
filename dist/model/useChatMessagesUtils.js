@@ -41,7 +41,39 @@ export const useChatMessagesUtils = () => {
             };
         });
     };
+    const readMessage = (message) => {
+        queryClient.setQueryData(['chatMessages', message.chatId], (oldData) => {
+            if (!oldData)
+                return oldData;
+            // Согласен, слишком тяжелое вхождение ради добавления сообщения
+            return {
+                ...oldData,
+                pages: oldData.pages.map((page, index) => {
+                    if (index === 0) {
+                        return {
+                            ...page,
+                            data: {
+                                ...page.data,
+                                data: {
+                                    items: page.data.data.items.map((m) => {
+                                        if (m.id == message.messageId)
+                                            return {
+                                                ...message,
+                                                isReaded: true,
+                                            };
+                                        return m;
+                                    }),
+                                },
+                            },
+                        };
+                    }
+                    return page;
+                }),
+            };
+        });
+    };
     return {
         addNewMessage,
+        readMessage,
     };
 };
