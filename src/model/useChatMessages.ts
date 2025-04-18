@@ -1,4 +1,8 @@
-import {keepPreviousData, useInfiniteQuery} from '@tanstack/react-query';
+import {
+    keepPreviousData,
+    useInfiniteQuery,
+    useQueryClient,
+} from '@tanstack/react-query';
 import {chatApi} from '../api';
 import {mapMessageDTO} from '../api/mapping';
 import {useInView} from 'react-intersection-observer';
@@ -10,6 +14,8 @@ import {useEffect, useState} from 'react';
 export const useChatMessages = (chatId: string | number) => {
     const {ref, inView} = useInView();
     const [canLoad, setCanLoad] = useState(false);
+    const [isFirstPageLoaded, setIsFirstPageLoaded] = useState(false);
+    const queryClient = useQueryClient();
 
     const {
         data,
@@ -26,6 +32,9 @@ export const useChatMessages = (chatId: string | number) => {
                 page: pageParam,
             });
 
+            console.log('response');
+            console.log(response);
+
             if (!response.data.success) {
                 throw new Error(
                     response.data.error || 'Ошибка получения Сообщений'
@@ -37,35 +46,54 @@ export const useChatMessages = (chatId: string | number) => {
 
         getNextPageParam: (data) => {
             let nextPage = data.data.data.page + 1;
-            if (nextPage > data.data.data.pages) nextPage = null;
-
+            if (nextPage > data.data.data.pages) return null;
             return nextPage;
         },
 
         placeholderData: keepPreviousData,
-        select: (data) =>
-            data.pages.flatMap((page) => {
-                return (
-                    page?.data?.data?.items?.map((el) => mapMessageDTO(el)) ??
-                    []
-                );
-            }),
+        select: (data) => {
+            const messages = data.pages.flatMap(
+                (page) => page?.data?.data?.items?.map(mapMessageDTO) ?? []
+            );
 
-        staleTime: 1000 * 60 * 5, // 5 минут
+            const seen = new Set();
+            return [
+                ...messages.filter((msg) => {
+                    const id = msg.id || msg.tempId;
+                    if (seen.has(id)) return false;
+                    seen.add(id);
+                    return true;
+                }),
+            ];
+        },
+
+        staleTime: 1000 * 60 * 5,
         initialPageParam: 1,
     });
 
-    const isLoading = isFirstLoading || isFetchingNextPage;
+    useEffect(() => {
+        return () => {
+            queryClient.removeQueries({queryKey: ['chatMessages', chatId]});
+        };
+    }, [chatId]);
 
     useEffect(() => {
-        if (inView && hasNextPage && !isLoading && canLoad) {
+        if (!isFirstPageLoaded && isSuccess) {
+            setIsFirstPageLoaded(true);
+        }
+    }, [isSuccess, isFirstPageLoaded]);
+
+    useEffect(() => {
+        if (inView && hasNextPage && !isFetchingNextPage && canLoad) {
             setCanLoad(false);
             fetchNextPage();
             setTimeout(() => {
-                setCanLoad(true); // Для того, чтобы они быстро не подгружались
+                setCanLoad(true);
             }, 1000);
         }
-    }, [inView, isSuccess, hasNextPage, fetchNextPage, isLoading, canLoad]);
+    }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage, canLoad]);
 
-    return {data, isLoading, ref, setCanLoad};
+    const isLoading = isFirstLoading || isFetchingNextPage;
+
+    return {data, isLoading, ref, setCanLoad, isSuccess, isFirstPageLoaded};
 };

@@ -1,55 +1,48 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {Message} from './types';
 
 /**
  * Отслеживает изменения и скроллить до конца
  */
-export const useScrollObserver = (data: Message[]) => {
-    const messageListRef = useRef<HTMLDivElement>(null); // Реф на контейнер списка
-
-    // Для того, чтобы сначала инициализировать, а потом можно было запрашивать страницы
+export const useScrollObserver = (
+    data: Message[],
+    isFirstPageLoaded: boolean,
+    setCanLoad?: (can: boolean) => void
+) => {
+    const messageListRef = useRef<HTMLDivElement>(null);
     const [isInited, setIsInited] = useState(false);
 
-    // Сразу крутим в низ
-    useEffect(() => {
-        if (!messageListRef || !messageListRef.current) return;
+    useLayoutEffect(() => {
+        if (!messageListRef?.current || isInited || !isFirstPageLoaded) return;
+
+        setCanLoad?.(false);
+
+        const el = messageListRef.current;
+        el.scrollTop = el.scrollHeight;
 
         setTimeout(() => {
-            if (!messageListRef || !messageListRef.current) return;
-
-            messageListRef.current.scrollTo({
-                top: messageListRef.current.scrollHeight,
-                behavior: 'smooth',
-            });
-        }, 50);
-
-        setTimeout(() => {
-            if (!messageListRef || !messageListRef.current) return;
-
             setIsInited(true);
-        }, 1000);
-    }, [messageListRef.current]);
+            setCanLoad?.(true);
+        }, 50);
+    }, [data.length, isFirstPageLoaded]);
 
-    // Скролл вниз при изменении messages
     useEffect(() => {
-        if (!messageListRef || !messageListRef.current || !isInited) return;
+        if (!messageListRef?.current || !isInited) return;
 
-        // Если скролл уже внизу или почти внизу — скроллим
-        const {scrollTop, scrollHeight, clientHeight} = messageListRef.current;
+        const el = messageListRef.current;
+        const {scrollTop, scrollHeight, clientHeight} = el;
         const isNearBottom = scrollHeight - (scrollTop + clientHeight) < 200;
 
         if (isNearBottom) {
-            // Небольшая задержка для гарантированного обновления DOM
             setTimeout(() => {
-                if (!messageListRef || !messageListRef.current) return;
-
-                messageListRef.current.scrollTo({
-                    top: messageListRef.current.scrollHeight,
+                if (!el) return;
+                el.scrollTo({
+                    top: el.scrollHeight,
                     behavior: 'smooth',
                 });
             }, 50);
         }
-    }, [data.length]);
+    }, [data.length, isInited]);
 
     return {
         messageListRef,

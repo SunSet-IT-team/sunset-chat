@@ -40,18 +40,20 @@ const MessageForm = ({chat, socket}: MessageFormProps) => {
             id: tempId,
             tempId: tempId,
             chatId: chat.id,
-            senderId: 4,
+            senderId: Number(chat.currentUserId),
             isLoading: true,
             isReaded: false,
             createdAt: new Date().toISOString(),
             text: message,
-            files: [
-                {
-                    id: `${fileId}`,
-                    mimetype: 'loader',
-                    url: 'placeholder',
-                },
-            ],
+            files: fileId
+                ? [
+                      {
+                          id: `${fileId}`,
+                          mimetype: 'loader',
+                          url: 'placeholder',
+                      },
+                  ]
+                : null,
             isMine: false,
         };
 

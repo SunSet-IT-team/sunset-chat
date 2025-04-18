@@ -28,9 +28,20 @@ export const ChatMessage = ({
 
     useEffect(() => {
         // Изменения статуса "прочитано"
-        if (message.readed || isMyMessage) return;
+        if (message.readed || isMyMessage || message.tempId == message.id)
+            return;
 
-        socket.current.emit('markAsRead', {messageId: message.id});
+        if (socket.current) {
+            console.log('markAsRead', {
+                messageId: message.id,
+                chatId: message.chatId,
+            });
+
+            socket.current.emit('markAsRead', {
+                messageId: message.id,
+                chatId: message.chatId,
+            });
+        }
     }, [socket, socket.current]);
 
     return (

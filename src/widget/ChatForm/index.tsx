@@ -17,6 +17,8 @@ export const ChatForm = ({chat, handleCloseChat}: ChatFormProps) => {
     const {addNewMessage, readMessage} = useChatMessagesUtils();
 
     const onNewMessage = (msg: any) => {
+        console.log(msg);
+
         addNewMessage(msg);
     };
 
@@ -25,6 +27,8 @@ export const ChatForm = ({chat, handleCloseChat}: ChatFormProps) => {
     };
 
     const onMessageRead = (msg: any) => {
+        console.log('Прочитано сообщение');
+
         readMessage(msg);
     };
 

@@ -56,16 +56,13 @@ const InfinityList = ({
 
     return (
         <Box sx={styles.box} ref={listRef}>
+            {isLoading && (
+                <CircularProgress size={64} thickness={4} sx={styles.loader} />
+            )}
             {children && children.length ? (
                 <>
                     {observedRef !== undefined && <Box ref={observedRef} />}
-                    {isLoading && (
-                        <CircularProgress
-                            size={64}
-                            thickness={4}
-                            sx={styles.loader}
-                        />
-                    )}
+
                     <Stack direction={'column'} gap={'12px'} sx={sx}>
                         {children}
                     </Stack>

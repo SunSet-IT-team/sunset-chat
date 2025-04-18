@@ -19,16 +19,20 @@ type MessageListProps = {
 const MessageList = ({chat, socket}: MessageListProps) => {
     const styles = useStyles();
 
-    const {data, isLoading, ref, setCanLoad} = useChatMessages(chat.id);
+    const {data, isLoading, ref, setCanLoad, isFirstPageLoaded} =
+        useChatMessages(chat.id);
 
     const messages = data || [];
 
-    const {messageListRef, isInited} = useScrollObserver(messages);
+    console.log('data');
+    console.log(data);
+    console.log(isLoading);
 
-    useEffect(() => {
-        // Костыль для первой загрузки
-        setCanLoad(isInited);
-    }, [isInited, setCanLoad]);
+    const {messageListRef} = useScrollObserver(
+        messages,
+        isFirstPageLoaded,
+        setCanLoad
+    );
 
     return (
         <Stack sx={styles.messageWrapper}>
@@ -45,7 +49,7 @@ const MessageList = ({chat, socket}: MessageListProps) => {
                 isLoading={isLoading}
                 titleNoLength="Сообщений пока нет..."
             >
-                {messages.reverse().map((m) => (
+                {[...messages].reverse().map((m) => (
                     <ChatMessage
                         key={m.id}
                         message={m}
