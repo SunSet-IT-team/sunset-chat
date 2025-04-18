@@ -131,13 +131,15 @@ const MessageForm = ({chat, socket}: MessageFormProps) => {
                 }}
             >
                 <TextField
-                    variant="outlined"
+                    multiline
+                    maxRows={3} // Максимальная высота (в строках)
+                    minRows={1} // Минимальная высота
                     fullWidth
                     value={message}
                     placeholder="Написать сообщение..."
                     sx={styles.messageArea}
                     onChange={(e) => setMessage(e.target.value)}
-                    onKeyUp={handleKeyPress}
+                    onKeyDown={handleKeyPress} // <--- поменяй с onKeyUp на onKeyDown!
                     slotProps={{
                         input: {
                             startAdornment: (
@@ -155,7 +157,6 @@ const MessageForm = ({chat, socket}: MessageFormProps) => {
                                 <InputAdornment position="end">
                                     <IconButton
                                         onClick={handleSend}
-                                        loading={isFileLoading}
                                         disabled={disabled}
                                     >
                                         <SendIcon />

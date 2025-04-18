@@ -44,6 +44,7 @@ export const useStyles = (): StylesDictionary => {
             width: '100%',
             fontSize: '14px',
             wordBreak: 'break-all',
+            whiteSpace: 'pre-line',
         },
         messageTime: {
             fontSize: '10px',
