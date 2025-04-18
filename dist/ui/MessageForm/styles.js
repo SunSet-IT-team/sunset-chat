@@ -3,6 +3,9 @@ export const useStyles = () => {
     const theme = useTheme();
     return {
         messageArea: {
+            '& textarea': {
+                p: '0!important',
+            },
             '& .MuiInputBase-input': {
                 padding: '10px',
                 '::placeholder': {

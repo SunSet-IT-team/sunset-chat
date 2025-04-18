@@ -16,8 +16,9 @@ export const useSocket = ({ chatId, events }) => {
         socket.emit('joinChat', { chatId });
         if (events?.onNewMessage)
             socket.on('newMessage', events.onNewMessage);
-        if (events?.onMessageRead)
+        if (events?.onMessageRead) {
             socket.on('messageRead', events.onMessageRead);
+        }
         if (events?.onError)
             socket.on('error', events.onError);
         // Посмотреть ошибки в случае подключения

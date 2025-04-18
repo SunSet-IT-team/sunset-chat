@@ -14,9 +14,13 @@ export const ChatMessage = ({ message, currentUserId, socket, }) => {
     const isMyMessage = message.senderId == currentUserId;
     useEffect(() => {
         // Изменения статуса "прочитано"
-        if (message.readed || isMyMessage)
+        if (message.readed || isMyMessage || message.tempId == message.id)
             return;
-        socket.current.emit('markAsRead', { messageId: message.id });
+        if (socket.current)
+            socket.current.emit('markAsRead', {
+                messageId: message.id,
+                chatId: message.chatId,
+            });
     }, [socket, socket.current]);
     return (_jsxs(Stack, { sx: isMyMessage ? styles.myMessage : styles.message, children: [_jsxs(Box, { sx: styles.messageContent, children: [message.content && (_jsx(Typography, { sx: styles.messageText, children: message.content })), message.fileUrl && (_jsx(FileDisplay, { fileUrl: message.fileUrl, isTemp: !!(message.tempId == message.id && message.fileUrl) }))] }), _jsxs(Stack, { sx: styles.messageAdditional, children: [_jsx(Typography, { sx: styles.messageTime, children: message.createdAt }), isMyMessage &&
                         (message.isLoading ? (_jsx(AccessTimeIcon, { fontSize: "small" })) : message.readed ? (_jsx(DoneAllRoundedIcon, { fontSize: "small" })) : (_jsx(DoneRoundedIcon, { fontSize: "small" })))] })] }));

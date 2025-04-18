@@ -6,4 +6,6 @@ export declare const useChatMessages: (chatId: string | number) => {
     isLoading: boolean;
     ref: (node?: Element | null) => void;
     setCanLoad: import("react").Dispatch<import("react").SetStateAction<boolean>>;
+    isSuccess: boolean;
+    isFirstPageLoaded: boolean;
 };

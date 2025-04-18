@@ -58,7 +58,7 @@ export const useChatMessagesUtils = () => {
                                     items: page.data.data.items.map((m) => {
                                         if (m.id == message.messageId)
                                             return {
-                                                ...message,
+                                                ...m,
                                                 isReaded: true,
                                             };
                                         return m;
