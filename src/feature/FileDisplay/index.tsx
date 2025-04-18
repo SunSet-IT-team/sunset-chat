@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Box, IconButton, Paper, Typography} from '@mui/material';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import DownloadIcon from '@mui/icons-material/Download';
+import {getFilePath} from '../../share/utils';
 
 type FileDisplayProps = {
     fileUrl: string;
@@ -24,6 +25,7 @@ const FileDisplay = ({fileUrl, isTemp}: FileDisplayProps) => {
         const checkIfImage = async () => {
             try {
                 const response = await fetch(fileUrl, {method: 'HEAD'});
+
                 const contentType = response.headers.get('Content-Type');
                 setIsImage(
                     contentType ? contentType.startsWith('image/') : false

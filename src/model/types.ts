@@ -6,6 +6,7 @@ export type Chat = {
     messages: Message[];
     chatUser: ChatUser;
     additionalInfo?: string;
+    currentUserId: string | number;
 };
 
 /**

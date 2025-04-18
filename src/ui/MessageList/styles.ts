@@ -24,7 +24,11 @@ export const useStyles = (): StylesDictionary => {
 
         additionalInfo: {
             textAlign: 'center',
-            mt: '10px',
+            mx: 'auto',
+            px: '12px',
+            opacity: 0.6,
+            fontWeight: 500,
+            fontSize: '21px',
         },
     };
 };

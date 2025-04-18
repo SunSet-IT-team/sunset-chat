@@ -14,7 +14,7 @@ type ChatFormProps = {
 };
 
 export const ChatForm = ({chat, handleCloseChat}: ChatFormProps) => {
-    const {addNewMessage} = useChatMessagesUtils();
+    const {addNewMessage, readMessage} = useChatMessagesUtils();
 
     const onNewMessage = (msg: any) => {
         addNewMessage(msg);
@@ -24,11 +24,16 @@ export const ChatForm = ({chat, handleCloseChat}: ChatFormProps) => {
         console.log(msg);
     };
 
+    const onMessageRead = (msg: any) => {
+        readMessage(msg);
+    };
+
     const {socket} = useSocket({
         chatId: chat.id,
         events: {
             onNewMessage,
             onError,
+            onMessageRead,
         },
     });
 
@@ -39,7 +44,7 @@ export const ChatForm = ({chat, handleCloseChat}: ChatFormProps) => {
             <Box sx={styles.form}>
                 <ChatHeader chatUser={chat.chatUser} />
 
-                <MessageList chat={chat} />
+                <MessageList chat={chat} socket={socket} />
 
                 <Stack sx={styles.messageForm}>
                     <MessageForm chat={chat} socket={socket} />

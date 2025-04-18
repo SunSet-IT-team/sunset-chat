@@ -1,5 +1,5 @@
 import {AxiosPromise} from 'axios';
-import {GetChatMessagesDTO} from './dto';
+import {GetChatMessagesDTO, GetFileDTO} from './dto';
 
 /**
  * Интерфейс для API чата
@@ -12,6 +12,11 @@ export interface СhatApiMethods {
         chatId: string | number,
         params: ChatApiGetChatMessagesParams
     ) => AxiosPromise<GetChatMessagesDTO>;
+
+    /**
+     * Получить файл
+     */
+    getFile: (filename: string) => AxiosPromise<GetFileDTO>;
 }
 
 export type ChatApiGetChatMessagesParams = {

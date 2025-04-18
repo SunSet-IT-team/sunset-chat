@@ -10,7 +10,7 @@ type ChatEvents = {
     /**
      * Прочитали сообщение
      */
-    onReadReceipt?: (msg: any) => void;
+    onMessageRead?: (msg: any) => void;
 
     /**
      * Произошла ошибка
@@ -45,8 +45,8 @@ export const useSocket = ({chatId, events}: UseSocketProps) => {
         socket.emit('joinChat', {chatId});
 
         if (events?.onNewMessage) socket.on('newMessage', events.onNewMessage);
-        if (events?.onReadReceipt)
-            socket.on('readReceipt', events.onReadReceipt);
+        if (events?.onMessageRead)
+            socket.on('messageRead', events.onMessageRead);
         if (events?.onError) socket.on('error', events.onError);
 
         // Посмотреть ошибки в случае подключения
@@ -56,7 +56,7 @@ export const useSocket = ({chatId, events}: UseSocketProps) => {
 
         return () => {
             socket.off('newMessage');
-            socket.off('readReceipt');
+            socket.off('messageRead');
             socket.off('error');
             socket.disconnect();
         };

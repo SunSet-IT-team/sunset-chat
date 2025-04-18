@@ -1,46 +1,63 @@
 import DoneAllRoundedIcon from '@mui/icons-material/DoneAllRounded';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
-import {Stack, Typography} from '@mui/material';
+import {Box, Stack, Typography} from '@mui/material';
 import {Message} from '../../model/types';
 import {useStyles} from './styles';
-import FileDisplay from '../FileDisplay';
+import FileDisplay from '../../feature/FileDisplay';
+import {useEffect} from 'react';
+import {Socket} from 'socket.io-client';
 
-type ChatMessageProps = Message;
+type ChatMessageProps = {
+    message: Message;
+    currentUserId: string | number;
+    socket: React.RefObject<Socket>;
+};
 
 /**
  * Шаблон сообщения чата
  */
 export const ChatMessage = ({
-    senderId,
-    content,
-    createdAt,
-    readed,
-    isLoading,
-    fileUrl,
-    ...m
+    message,
+    currentUserId,
+    socket,
 }: ChatMessageProps) => {
     const styles = useStyles();
 
-    const isMyMessage = senderId == 4;
+    const isMyMessage = message.senderId == currentUserId;
+
+    useEffect(() => {
+        // Изменения статуса "прочитано"
+        if (message.readed || isMyMessage) return;
+
+        socket.current.emit('markAsRead', {messageId: message.id});
+    }, [socket, socket.current]);
 
     return (
         <Stack sx={isMyMessage ? styles.myMessage : styles.message}>
-            {content && (
-                <Typography sx={styles.messageContent}>{content}</Typography>
-            )}
-            {fileUrl && (
-                <FileDisplay
-                    fileUrl={fileUrl}
-                    isTemp={!!(m.tempId == m.id && fileUrl)}
-                />
-            )}
+            <Box sx={styles.messageContent}>
+                {message.content && (
+                    <Typography sx={styles.messageText}>
+                        {message.content}
+                    </Typography>
+                )}
+                {message.fileUrl && (
+                    <FileDisplay
+                        fileUrl={message.fileUrl}
+                        isTemp={
+                            !!(message.tempId == message.id && message.fileUrl)
+                        }
+                    />
+                )}
+            </Box>
             <Stack sx={styles.messageAdditional}>
-                <Typography sx={styles.messageTime}>{createdAt}</Typography>
+                <Typography sx={styles.messageTime}>
+                    {message.createdAt}
+                </Typography>
                 {isMyMessage &&
-                    (isLoading ? (
+                    (message.isLoading ? (
                         <AccessTimeIcon fontSize="small" />
-                    ) : readed ? (
+                    ) : message.readed ? (
                         <DoneAllRoundedIcon fontSize="small" />
                     ) : (
                         <DoneRoundedIcon fontSize="small" />

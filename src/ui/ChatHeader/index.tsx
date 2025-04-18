@@ -15,7 +15,11 @@ const ChatHeader = ({chatUser}: ChatHeaderProps) => {
     return (
         <Box sx={styles.chatHeader}>
             <Stack sx={styles.chatHeaderUser}>
-                <Avatar src="" alt="" sx={styles.chatHeaderUserImage} />
+                <Avatar
+                    src={chatUser.imagePath}
+                    alt={chatUser.name}
+                    sx={styles.chatHeaderUserImage}
+                />
                 <Typography sx={styles.chatHeaderUserName}>
                     {chatUser.name}
                 </Typography>

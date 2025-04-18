@@ -6,15 +6,17 @@ import {Chat} from '../../model/types';
 import {useChatMessages} from '../../model/useChatMessages';
 import InfinityList from '../../feature/InfinityList';
 import {useEffect, useState} from 'react';
+import {Socket} from 'socket.io-client';
 
 type MessageListProps = {
     chat: Chat;
+    socket: React.RefObject<Socket>;
 };
 
 /**
  * Вывод списка сообщений
  */
-const MessageList = ({chat}: MessageListProps) => {
+const MessageList = ({chat, socket}: MessageListProps) => {
     const styles = useStyles();
 
     const {data, isLoading, ref, setCanLoad} = useChatMessages(chat.id);
@@ -44,7 +46,12 @@ const MessageList = ({chat}: MessageListProps) => {
                 titleNoLength="Сообщений пока нет..."
             >
                 {messages.reverse().map((m) => (
-                    <ChatMessage key={m.id} {...m} />
+                    <ChatMessage
+                        key={m.id}
+                        message={m}
+                        socket={socket}
+                        currentUserId={chat.currentUserId}
+                    />
                 ))}
             </InfinityList>
         </Stack>

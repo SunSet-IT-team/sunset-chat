@@ -38,4 +38,10 @@ export const chatApi: СhatApiMethods = {
 
         return res;
     },
+
+    getFile: (filename: string) => {
+        const res = api.get(`/api/files/${filename}`);
+
+        return res;
+    },
 };

@@ -10,6 +10,12 @@ export type GetChatMessagesDTO = ServerAns<{
     total: number;
     limit: number;
 }>;
+/**
+ * DTO для получения данных чата
+ */
+export type GetFileDTO = ServerAns<{
+    file: FileDTO;
+}>;
 
 /**
  * Файл, который приходит с сервера

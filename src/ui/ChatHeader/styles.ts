@@ -1,12 +1,12 @@
-import { useTheme } from '@mui/material/styles';
-import { StylesDictionary } from '../../share/types';
+import {useTheme} from '@mui/material/styles';
+import {StylesDictionary} from '../../share/types';
 
 export const useStyles = (): StylesDictionary => {
     const theme = useTheme();
 
     return {
         chatHeader: {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.secondary.main,
             position: 'sticky',
             left: 0,
             top: 0,
@@ -22,6 +22,9 @@ export const useStyles = (): StylesDictionary => {
         chatHeaderUserName: {
             textAlign: 'center',
             mt: '10px',
+            fontWeight: 500,
+            fontSize: '21px',
+            letterSpacing: '-0.05px',
         },
 
         chatHeaderUserImage: {
