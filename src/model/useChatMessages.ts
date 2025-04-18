@@ -32,9 +32,6 @@ export const useChatMessages = (chatId: string | number) => {
                 page: pageParam,
             });
 
-            console.log('response');
-            console.log(response);
-
             if (!response.data.success) {
                 throw new Error(
                     response.data.error || 'Ошибка получения Сообщений'

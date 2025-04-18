@@ -7,6 +7,7 @@ import {chatTheme} from '../../theme';
 import {useSocket} from '../../model/useSocket';
 import MessageForm from '../../ui/MessageForm';
 import {useChatMessagesUtils} from '../../model/useChatMessagesUtils';
+import newMessageSound from '../../assets/sounds/new_message.mp3';
 
 type ChatFormProps = {
     chat: Chat;
@@ -17,8 +18,12 @@ export const ChatForm = ({chat, handleCloseChat}: ChatFormProps) => {
     const {addNewMessage, readMessage} = useChatMessagesUtils();
 
     const onNewMessage = (msg: any) => {
-        console.log(msg);
-
+        if (msg.senderId !== chat.currentUserId) {
+            const audio = new Audio(newMessageSound);
+            audio.play().catch((e) => {
+                console.error('Не удалось воспроизвести звук:', e);
+            });
+        }
         addNewMessage(msg);
     };
 
@@ -27,8 +32,6 @@ export const ChatForm = ({chat, handleCloseChat}: ChatFormProps) => {
     };
 
     const onMessageRead = (msg: any) => {
-        console.log('Прочитано сообщение');
-
         readMessage(msg);
     };
 

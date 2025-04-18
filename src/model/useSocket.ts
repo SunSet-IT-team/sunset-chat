@@ -46,7 +46,7 @@ export const useSocket = ({chatId, events}: UseSocketProps) => {
 
         if (events?.onNewMessage) socket.on('newMessage', events.onNewMessage);
         if (events?.onMessageRead) {
-            console.log('messageRead aa');
+            socket.on('messageRead', events.onMessageRead);
         }
         if (events?.onError) socket.on('error', events.onError);
 

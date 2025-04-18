@@ -77,7 +77,7 @@ export const useChatMessagesUtils = () => {
                                             (m: MessageDTO) => {
                                                 if (m.id == message.messageId)
                                                     return {
-                                                        ...message,
+                                                        ...m,
                                                         isReaded: true,
                                                     };
 

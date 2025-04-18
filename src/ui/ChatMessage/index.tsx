@@ -31,17 +31,11 @@ export const ChatMessage = ({
         if (message.readed || isMyMessage || message.tempId == message.id)
             return;
 
-        if (socket.current) {
-            console.log('markAsRead', {
-                messageId: message.id,
-                chatId: message.chatId,
-            });
-
+        if (socket.current)
             socket.current.emit('markAsRead', {
                 messageId: message.id,
                 chatId: message.chatId,
             });
-        }
     }, [socket, socket.current]);
 
     return (

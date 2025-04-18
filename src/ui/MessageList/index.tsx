@@ -24,10 +24,6 @@ const MessageList = ({chat, socket}: MessageListProps) => {
 
     const messages = data || [];
 
-    console.log('data');
-    console.log(data);
-    console.log(isLoading);
-
     const {messageListRef} = useScrollObserver(
         messages,
         isFirstPageLoaded,
