@@ -1,5 +1,5 @@
-import { useTheme } from '@mui/material/styles';
-import { StylesDictionary } from '../../share/types';
+import {useTheme} from '@mui/material/styles';
+import {StylesDictionary} from '../../share/types';
 
 export const useStyles = (): StylesDictionary => {
     const theme = useTheme();
@@ -18,6 +18,13 @@ export const useStyles = (): StylesDictionary => {
             gap: '10px',
             px: '20px',
             pb: '20px',
+        },
+        btn: {
+            textTransform: 'none',
+            fontWeight: '500',
+            borderRadius: '10px',
+            py: '12px',
+            border: 'none',
         },
     };
 };

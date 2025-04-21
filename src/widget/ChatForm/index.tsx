@@ -1,12 +1,12 @@
-import { Box, Button, Stack, ThemeProvider } from '@mui/material';
-import { useStyles } from './styles';
+import {Box, Button, Stack, ThemeProvider} from '@mui/material';
+import {useStyles} from './styles';
 import ChatHeader from '../../ui/ChatHeader';
 import MessageList from '../../ui/MessageList';
-import { Chat } from '../../model/types';
-import { chatTheme } from '../../theme';
-import { useSocket } from '../../model/useSocket';
+import {Chat} from '../../model/types';
+import {chatTheme} from '../../theme';
+import {useSocket} from '../../model/useSocket';
 import MessageForm from '../../ui/MessageForm';
-import { useChatMessagesUtils } from '../../model/useChatMessagesUtils';
+import {useChatMessagesUtils} from '../../model/useChatMessagesUtils';
 import newMessageSound from '../../assets/sounds/new_message.mp3';
 
 type ChatFormProps = {
@@ -14,8 +14,8 @@ type ChatFormProps = {
     handleCloseChat?: () => void;
 };
 
-export const ChatForm = ({ chat, handleCloseChat }: ChatFormProps) => {
-    const { addNewMessage, readMessage } = useChatMessagesUtils();
+export const ChatForm = ({chat, handleCloseChat}: ChatFormProps) => {
+    const {addNewMessage, readMessage} = useChatMessagesUtils();
 
     const onNewMessage = (msg: any) => {
         if (msg.senderId !== chat.currentUserId) {
@@ -35,7 +35,7 @@ export const ChatForm = ({ chat, handleCloseChat }: ChatFormProps) => {
         readMessage(msg);
     };
 
-    const { socket } = useSocket({
+    const {socket} = useSocket({
         chatId: chat.id,
         events: {
             onNewMessage,
@@ -56,7 +56,13 @@ export const ChatForm = ({ chat, handleCloseChat }: ChatFormProps) => {
                 <Stack sx={styles.messageForm}>
                     <MessageForm chat={chat} socket={socket} />
 
-                    <Button variant="contained" color="primary" fullWidth onClick={handleCloseChat}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        onClick={handleCloseChat}
+                        sx={styles.btn}
+                    >
                         Закрыть чат
                     </Button>
                 </Stack>

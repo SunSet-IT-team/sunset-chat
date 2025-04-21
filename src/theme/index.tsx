@@ -6,10 +6,13 @@ import {createTheme} from '@mui/material/styles';
 export const chatTheme = createTheme({
     palette: {
         primary: {
-            main: '#4D4D4D',
+            main: '#3975CF',
         },
         secondary: {
             main: '#D9D9D9',
         },
+    },
+    typography: {
+        fontFamily: '"Jost", "Helvetica", "Arial", sans-serif',
     },
 });

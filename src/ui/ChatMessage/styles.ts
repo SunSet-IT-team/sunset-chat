@@ -15,8 +15,8 @@ export const useStyles = (): StylesDictionary => {
             textAlign: 'left',
             flexDirection: 'column',
             alignItems: 'flex-end',
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.text.primary,
+            backgroundColor: '#3975CF33',
+            color: '#000000',
         },
 
         myMessage: {
@@ -29,8 +29,8 @@ export const useStyles = (): StylesDictionary => {
             ml: 'auto',
             mr: '',
 
-            backgroundColor: theme.palette.primary.main,
-            color: 'white',
+            backgroundColor: '#3975CF33',
+            color: '#000000',
         },
 
         messageContent: {
