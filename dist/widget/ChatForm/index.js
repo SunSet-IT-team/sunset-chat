@@ -11,7 +11,7 @@ import newMessageSound from '../../assets/sounds/new_message.mp3';
 export const ChatForm = ({ chat, handleCloseChat }) => {
     const { addNewMessage, readMessage } = useChatMessagesUtils();
     const onNewMessage = (msg) => {
-        if (msg.senderId !== chat.currentUserId) {
+        if (Number(msg.senderId) !== Number(chat.currentUserId)) {
             const audio = new Audio(newMessageSound);
             audio.play().catch((e) => {
                 console.error('Не удалось воспроизвести звук:', e);

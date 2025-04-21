@@ -9,9 +9,9 @@ import { useEffect } from 'react';
 /**
  * Шаблон сообщения чата
  */
-export const ChatMessage = ({ message, currentUserId, socket, }) => {
+export const ChatMessage = ({ message, currentUserId, socket }) => {
     const styles = useStyles();
-    const isMyMessage = message.senderId == currentUserId;
+    const isMyMessage = Number(message.senderId) == Number(currentUserId);
     useEffect(() => {
         // Изменения статуса "прочитано"
         if (message.readed || isMyMessage || message.tempId == message.id)

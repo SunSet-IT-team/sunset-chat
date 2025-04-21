@@ -8,5 +8,5 @@ type ChatMessageProps = {
 /**
  * Шаблон сообщения чата
  */
-export declare const ChatMessage: ({ message, currentUserId, socket, }: ChatMessageProps) => import("react/jsx-runtime").JSX.Element;
+export declare const ChatMessage: ({ message, currentUserId, socket }: ChatMessageProps) => import("react/jsx-runtime").JSX.Element;
 export {};

@@ -18,7 +18,7 @@ export const ChatForm = ({ chat, handleCloseChat }: ChatFormProps) => {
     const { addNewMessage, readMessage } = useChatMessagesUtils();
 
     const onNewMessage = (msg: any) => {
-        if (msg.senderId !== chat.currentUserId) {
+        if (Number(msg.senderId) !== Number(chat.currentUserId)) {
             const audio = new Audio(newMessageSound);
             audio.play().catch((e) => {
                 console.error('Не удалось воспроизвести звук:', e);
