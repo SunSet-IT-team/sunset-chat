@@ -12,8 +12,8 @@ export const useStyles = () => {
             textAlign: 'left',
             flexDirection: 'column',
             alignItems: 'flex-end',
-            backgroundColor: theme.palette.secondary.main,
-            color: theme.palette.text.primary,
+            backgroundColor: '#3975CF33',
+            color: '#000000',
         },
         myMessage: {
             display: 'flex',
@@ -24,8 +24,8 @@ export const useStyles = () => {
             borderRadius: '5px',
             ml: 'auto',
             mr: '',
-            backgroundColor: theme.palette.primary.main,
-            color: 'white',
+            backgroundColor: '#3975CF33',
+            color: '#000000',
         },
         messageContent: {
             display: 'flex',

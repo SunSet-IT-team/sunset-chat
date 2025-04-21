@@ -16,5 +16,12 @@ export const useStyles = () => {
             px: '20px',
             pb: '20px',
         },
+        btn: {
+            textTransform: 'none',
+            fontWeight: '500',
+            borderRadius: '10px',
+            py: '12px',
+            border: 'none',
+        },
     };
 };

@@ -3,7 +3,7 @@ export const useStyles = () => {
     const theme = useTheme();
     return {
         chatHeader: {
-            backgroundColor: theme.palette.secondary.main,
+            background: 'linear-gradient(to right, #3975CF, #3FBC14)',
             position: 'sticky',
             left: 0,
             top: 0,
@@ -20,12 +20,14 @@ export const useStyles = () => {
             fontWeight: 500,
             fontSize: '21px',
             letterSpacing: '-0.05px',
+            color: '#fff',
         },
         chatHeaderUserImage: {
             borderRadius: '50%',
             width: 89,
             height: 89,
-            backgroundColor: '#4D4D4D',
+            backgroundColor: '#fff',
+            border: 'solid 2px #fff',
         },
     };
 };

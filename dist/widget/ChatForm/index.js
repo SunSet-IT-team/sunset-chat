@@ -34,5 +34,5 @@ export const ChatForm = ({ chat, handleCloseChat }) => {
         },
     });
     const styles = useStyles();
-    return (_jsx(ThemeProvider, { theme: chatTheme, children: _jsxs(Box, { sx: styles.form, children: [_jsx(ChatHeader, { chatUser: chat.chatUser }), _jsx(MessageList, { chat: chat, socket: socket }), _jsxs(Stack, { sx: styles.messageForm, children: [_jsx(MessageForm, { chat: chat, socket: socket }), _jsx(Button, { variant: "contained", color: "primary", fullWidth: true, onClick: handleCloseChat, children: "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u0447\u0430\u0442" })] })] }) }));
+    return (_jsx(ThemeProvider, { theme: chatTheme, children: _jsxs(Box, { sx: styles.form, children: [_jsx(ChatHeader, { chatUser: chat.chatUser }), _jsx(MessageList, { chat: chat, socket: socket }), _jsxs(Stack, { sx: styles.messageForm, children: [_jsx(MessageForm, { chat: chat, socket: socket }), _jsx(Button, { variant: "contained", color: "primary", fullWidth: true, onClick: handleCloseChat, sx: styles.btn, children: "\u0417\u0430\u043A\u0440\u044B\u0442\u044C \u0447\u0430\u0442" })] })] }) }));
 };
