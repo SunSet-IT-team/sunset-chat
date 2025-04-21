@@ -1,12 +1,12 @@
-import {Box, TextField, InputAdornment, IconButton} from '@mui/material';
-import {useRef, useState} from 'react';
-import {SendIcon} from '../icons/SendIcon';
-import {useStyles} from './styles';
+import { Box, TextField, InputAdornment, IconButton } from '@mui/material';
+import { useRef, useState } from 'react';
+import { SendIcon } from '../icons/SendIcon';
+import { useStyles } from './styles';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import {Chat} from '../../model/types';
-import {Socket} from 'socket.io-client';
-import {useChatMessagesUtils} from '../../model/useChatMessagesUtils';
-import {MessageDTO, UploadFileDTO} from '../../api/dto';
+import { Chat } from '../../model/types';
+import { Socket } from 'socket.io-client';
+import { useChatMessagesUtils } from '../../model/useChatMessagesUtils';
+import { MessageDTO, UploadFileDTO } from '../../api/dto';
 import FileUploader from '../../feature/FileUploader';
 
 type MessageFormProps = {
@@ -17,12 +17,12 @@ type MessageFormProps = {
 /**
  * Форма отправки сообщения
  */
-const MessageForm = ({chat, socket}: MessageFormProps) => {
+const MessageForm = ({ chat, socket }: MessageFormProps) => {
     const [message, setMessage] = useState<string>('');
     const [isFileLoading, setIsFileLoading] = useState(false);
     const [file, setFile] = useState<File | null>(null);
     const [fileId, setFileId] = useState(''); // id который пришёл с сервера
-    const {addNewMessage} = useChatMessagesUtils();
+    const { addNewMessage } = useChatMessagesUtils();
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const styles = useStyles();
@@ -128,8 +128,7 @@ const MessageForm = ({chat, socket}: MessageFormProps) => {
                     display: 'flex',
                     width: '100%',
                     alignItems: 'center',
-                }}
-            >
+                }}>
                 <TextField
                     multiline
                     maxRows={3} // Максимальная высота (в строках)
@@ -140,30 +139,21 @@ const MessageForm = ({chat, socket}: MessageFormProps) => {
                     sx={styles.messageArea}
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={handleKeyPress} // <--- поменяй с onKeyUp на onKeyDown!
-                    slotProps={{
-                        input: {
-                            startAdornment: (
-                                <InputAdornment position="start" sx={{pl: 1}}>
-                                    <IconButton
-                                        edge="start"
-                                        onClick={handleAttach}
-                                        sx={{p: 0}}
-                                    >
-                                        <AddCircleOutlineRoundedIcon />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={handleSend}
-                                        disabled={disabled}
-                                    >
-                                        <SendIcon />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        },
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start" sx={{ pl: 1 }}>
+                                <IconButton edge="start" onClick={handleAttach} sx={{ p: 0 }}>
+                                    <AddCircleOutlineRoundedIcon />
+                                </IconButton>
+                            </InputAdornment>
+                        ),
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={handleSend} disabled={disabled}>
+                                    <SendIcon />
+                                </IconButton>
+                            </InputAdornment>
+                        ),
                     }}
                 />
             </Box>

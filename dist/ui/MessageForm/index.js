@@ -96,11 +96,9 @@ const MessageForm = ({ chat, socket }) => {
                     display: 'flex',
                     width: '100%',
                     alignItems: 'center',
-                }, children: _jsx(TextField, { multiline: true, maxRows: 3, minRows: 1, fullWidth: true, value: message, placeholder: "\u041D\u0430\u043F\u0438\u0441\u0430\u0442\u044C \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435...", sx: styles.messageArea, onChange: (e) => setMessage(e.target.value), onKeyDown: handleKeyPress, slotProps: {
-                        input: {
-                            startAdornment: (_jsx(InputAdornment, { position: "start", sx: { pl: 1 }, children: _jsx(IconButton, { edge: "start", onClick: handleAttach, sx: { p: 0 }, children: _jsx(AddCircleOutlineRoundedIcon, {}) }) })),
-                            endAdornment: (_jsx(InputAdornment, { position: "end", children: _jsx(IconButton, { onClick: handleSend, disabled: disabled, children: _jsx(SendIcon, {}) }) })),
-                        },
+                }, children: _jsx(TextField, { multiline: true, maxRows: 3, minRows: 1, fullWidth: true, value: message, placeholder: "\u041D\u0430\u043F\u0438\u0441\u0430\u0442\u044C \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435...", sx: styles.messageArea, onChange: (e) => setMessage(e.target.value), onKeyDown: handleKeyPress, InputProps: {
+                        startAdornment: (_jsx(InputAdornment, { position: "start", sx: { pl: 1 }, children: _jsx(IconButton, { edge: "start", onClick: handleAttach, sx: { p: 0 }, children: _jsx(AddCircleOutlineRoundedIcon, {}) }) })),
+                        endAdornment: (_jsx(InputAdornment, { position: "end", children: _jsx(IconButton, { onClick: handleSend, disabled: disabled, children: _jsx(SendIcon, {}) }) })),
                     } }) })] }));
 };
 export default MessageForm;
