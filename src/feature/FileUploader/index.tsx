@@ -1,16 +1,12 @@
-import React, {useState} from 'react';
-import {
-    LinearProgress,
-    Box,
-    Typography,
-    Paper,
-    Stack,
-    IconButton,
-} from '@mui/material';
-import {InsertDriveFile, Close} from '@mui/icons-material';
+import React, { useState } from 'react';
+import { LinearProgress, Box, Typography, Paper, Stack, IconButton } from '@mui/material';
+import { InsertDriveFile, Close } from '@mui/icons-material';
 import api from '../../api';
-import {UploadFileDTO} from '../../api/dto';
-import {useStyles} from './styles';
+import { UploadFileDTO } from '../../api/dto';
+import { useStyles } from './styles';
+import { toast } from 'react-toastify';
+
+const MAX_FILE_SIZE_BYTES = 25 * 1024 * 1024; // 25 МБ
 
 type FileUploaderProps = {
     /**
@@ -62,9 +58,20 @@ const FileUploader = ({
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
-            setFile(event.target.files[0]);
-            onStartUpload();
-            handleUpload(event.target.files[0]);
+            const selectedFile = event.target.files[0];
+
+            if (selectedFile.size > MAX_FILE_SIZE_BYTES) {
+                toast.error(
+                    `Файл слишком большой. Максимальный размер: ${
+                        MAX_FILE_SIZE_BYTES / (1024 * 1024)
+                    } МБ`,
+                );
+                return;
+            }
+
+            setFile(selectedFile);
+            if (onStartUpload) onStartUpload();
+            handleUpload(selectedFile);
         }
     };
 
@@ -79,18 +86,17 @@ const FileUploader = ({
 
         try {
             const res = await api.post('/files/upload', formData, {
-                headers: {'Content-Type': 'multipart/form-data'},
+                headers: { 'Content-Type': 'multipart/form-data' },
 
                 onUploadProgress: (progressEvent) => {
                     const percentCompleted = Math.round(
-                        (progressEvent.loaded * 100) /
-                            (progressEvent.total || 1)
+                        (progressEvent.loaded * 100) / (progressEvent.total || 1),
                     );
                     setUploadProgress(percentCompleted);
                 },
             });
 
-            onSuccessUpload(res.data);
+            if (onSuccessUpload) onSuccessUpload(res.data);
         } catch (error) {
             console.error('Ошибка загрузки:', error);
         } finally {
@@ -101,7 +107,7 @@ const FileUploader = ({
     const handleRemoveFile = () => {
         setFile(null);
         setUploadProgress(0);
-        onDelete();
+        if (onDelete) onDelete();
     };
 
     return (
@@ -109,7 +115,7 @@ const FileUploader = ({
             <Stack spacing={3}>
                 <input
                     accept="*/*"
-                    style={{display: 'none'}}
+                    style={{ display: 'none' }}
                     id="file-upload"
                     type="file"
                     ref={fileInputRef}
@@ -120,10 +126,8 @@ const FileUploader = ({
                     <Box sx={styles.uploader}>
                         <Box display="flex" alignItems="center">
                             <Box display="flex" alignItems="center">
-                                <InsertDriveFile color="primary" sx={{mr: 1}} />
-                                <Typography variant="body1">
-                                    {file.name}
-                                </Typography>
+                                <InsertDriveFile color="primary" sx={{ mr: 1 }} />
+                                <Typography variant="body1">{file.name}</Typography>
                             </Box>
                             <IconButton onClick={handleRemoveFile} size="small">
                                 <Close fontSize="small" />
@@ -134,7 +138,7 @@ const FileUploader = ({
                             <LinearProgress
                                 variant="determinate"
                                 value={uploadProgress}
-                                sx={{mt: 2}}
+                                sx={{ mt: 2 }}
                             />
                         )}
                     </Box>
